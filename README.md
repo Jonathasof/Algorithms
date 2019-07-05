@@ -1,4 +1,1 @@
-"# new" 
-"# new" 
-"# new" 
-"# new" 
+Projects performed in the College or independently.
