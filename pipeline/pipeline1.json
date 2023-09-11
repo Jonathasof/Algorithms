@@ -46,6 +46,27 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "rw_tr_malha_setor_censitario",
+				"description": "Roda o script que leva os dados da raw para trusted. Depois disso leva os dados processados para a pasta na raw chamada \"processados\"",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "move_dados_ibge_unzip_novo",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
 			}
 		],
 		"annotations": []
