@@ -1,0 +1,92 @@
+{
+	"name": "AzureDatabricks1",
+	"properties": {
+		"type": "AzureDatabricks",
+		"parameters": {
+			"delta_cache_enabled": {
+				"type": "string",
+				"defaultValue": "true"
+			},
+			"delta_cache_max_disk_usage": {
+				"type": "string",
+				"defaultValue": "50g"
+			},
+			"vm_type": {
+				"type": "string",
+				"defaultValue": "Standard_F32s_v2"
+			},
+			"num_worker_nodes": {
+				"type": "string",
+				"defaultValue": "1:2"
+			},
+			"cluster_version": {
+				"type": "string",
+				"defaultValue": "10.5.x-scala2.12"
+			},
+			"adf_pipeline_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"typeProperties": {
+			"domain": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_kv_nie",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "DOMAIN-URL-DBRICKS-NIE"
+			},
+			"authentication": "MSI",
+			"workspaceResourceId": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_kv_nie",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "WS-RESOURCE-ID-DBRICKS-NIE"
+			},
+			"newClusterNodeType": "@linkedService().vm_type",
+			"newClusterNumOfWorker": "@linkedService().num_worker_nodes",
+			"newClusterSparkConf": {
+				"spark.databricks.io.cache.maxDiskUsage": {
+					"value": "@linkedService().delta_cache_max_disk_usage",
+					"type": "Expression"
+				},
+				"spark.databricks.io.cache.maxMetaDataCache": "1g",
+				"spark.databricks.io.cache.compression.enabled": "false",
+				"spark.databricks.io.cache.enabled": {
+					"value": "@linkedService().delta_cache_enabled",
+					"type": "Expression"
+				}
+			},
+			"newClusterSparkEnvVars": {
+				"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+			},
+			"newClusterCustomTags": {
+				"AdfPipelineName": {
+					"value": "@linkedService().adf_pipeline_name",
+					"type": "Expression"
+				}
+			},
+			"newClusterVersion": "@linkedService().cluster_version",
+			"newClusterInitScripts": [
+				"/init_scripts/msodbcsql17.sh"
+			],
+			"clusterOption": "Autoscaling",
+			"policyId": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_kv_nie",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "AS-POLICY-ID-DBRICKS-NIE"
+			},
+			"enable_elastic_disk": true
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
