@@ -1,0 +1,7 @@
+{
+	"name": "AzureDataLakeStorage201",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/2d7deb8d-2678-40c5-9abd-5d31857e2b1c/resourceGroups/TesteGrupo/providers/Microsoft.Storage/storageAccounts/ecanalyicsdlprod",
+		"groupId": "dfs"
+	}
+}
