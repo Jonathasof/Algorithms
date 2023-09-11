@@ -12,6 +12,9 @@
 				"type": "AzureBlobFSLocation",
 				"folderPath": "raw",
 				"fileSystem": "teste-eco"
+			},
+			"compression": {
+				"type": "ZipDeflate"
 			}
 		}
 	}
