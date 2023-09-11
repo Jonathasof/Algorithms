@@ -1,0 +1,9 @@
+{
+	"name": "ecanalyticsdf-prod",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "f0a08e9b-3e3c-4ee6-9f4a-7bbd0b77cb9e",
+		"tenantId": "3741e220-b61d-4def-99e6-2075304c4388"
+	}
+}
