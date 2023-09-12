@@ -66,7 +66,22 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks1",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"delta_cache_enabled": "true",
+						"delta_cache_max_disk_usage": "50g",
+						"vm_type": "Standard_F8s_v2",
+						"num_worker_nodes": "1:2",
+						"cluster_version": "10.5.x-scala2.12",
+						"adf_pipeline_name": {
+							"value": "@toLower(pipeline().Pipeline)",
+							"type": "Expression"
+						}
+					}
+				}
 			}
 		],
 		"annotations": []
