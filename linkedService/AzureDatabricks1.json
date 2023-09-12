@@ -1,7 +1,6 @@
 {
 	"name": "AzureDatabricks1",
 	"properties": {
-		"type": "AzureDatabricks",
 		"parameters": {
 			"delta_cache_enabled": {
 				"type": "string",
@@ -22,67 +21,28 @@
 			"cluster_version": {
 				"type": "string",
 				"defaultValue": "10.5.x-scala2.12"
-			},
-			"adf_pipeline_name": {
-				"type": "string"
 			}
 		},
 		"annotations": [],
+		"type": "AzureDatabricks",
 		"typeProperties": {
-			"domain": {
+			"domain": "https://adb-7105013857974613.13.azuredatabricks.net",
+			"accessToken": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
-					"referenceName": "ls_kv_nie",
+					"referenceName": "AzureKeyVault1",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": "DOMAIN-URL-DBRICKS-NIE"
+				"secretName": "Databrickstoken"
 			},
-			"authentication": "MSI",
-			"workspaceResourceId": {
-				"type": "AzureKeyVaultSecret",
-				"store": {
-					"referenceName": "ls_kv_nie",
-					"type": "LinkedServiceReference"
-				},
-				"secretName": "WS-RESOURCE-ID-DBRICKS-NIE"
-			},
-			"newClusterNodeType": "@linkedService().vm_type",
-			"newClusterNumOfWorker": "@linkedService().num_worker_nodes",
-			"newClusterSparkConf": {
-				"spark.databricks.io.cache.maxDiskUsage": {
-					"value": "@linkedService().delta_cache_max_disk_usage",
-					"type": "Expression"
-				},
-				"spark.databricks.io.cache.maxMetaDataCache": "1g",
-				"spark.databricks.io.cache.compression.enabled": "false",
-				"spark.databricks.io.cache.enabled": {
-					"value": "@linkedService().delta_cache_enabled",
-					"type": "Expression"
-				}
-			},
+			"newClusterNodeType": "Standard_DS3_v2",
+			"newClusterNumOfWorker": "1",
 			"newClusterSparkEnvVars": {
 				"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
 			},
-			"newClusterCustomTags": {
-				"AdfPipelineName": {
-					"value": "@linkedService().adf_pipeline_name",
-					"type": "Expression"
-				}
-			},
-			"newClusterVersion": "@linkedService().cluster_version",
-			"newClusterInitScripts": [
-				"/init_scripts/msodbcsql17.sh"
-			],
-			"clusterOption": "Autoscaling",
-			"policyId": {
-				"type": "AzureKeyVaultSecret",
-				"store": {
-					"referenceName": "ls_kv_nie",
-					"type": "LinkedServiceReference"
-				},
-				"secretName": "AS-POLICY-ID-DBRICKS-NIE"
-			},
-			"enable_elastic_disk": true
+			"newClusterVersion": "13.0.x-scala2.12",
+			"clusterOption": "Fixed",
+			"newClusterInitScripts": []
 		},
 		"connectVia": {
 			"referenceName": "AutoResolveIntegrationRuntime",
