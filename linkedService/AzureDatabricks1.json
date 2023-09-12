@@ -21,6 +21,9 @@
 			"cluster_version": {
 				"type": "string",
 				"defaultValue": "10.5.x-scala2.12"
+			},
+			"adf_pipeline_name": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
