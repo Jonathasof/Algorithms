@@ -29,8 +29,7 @@
 					"sink": {
 						"type": "ParquetSink",
 						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings",
-							"copyBehavior": "PreserveHierarchy"
+							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
 							"type": "ParquetWriteSettings"
@@ -66,6 +65,45 @@
 				"dependsOn": [
 					{
 						"activity": "move_dados_ibge_unzip_novo",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Shared/1-RAW/raw_to_trusted"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks1",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"delta_cache_enabled": "true",
+						"delta_cache_max_disk_usage": "50g",
+						"vm_type": "Standard_F4s_v2",
+						"num_worker_nodes": "1",
+						"cluster_version": "10.5.x-scala2.12",
+						"adf_pipeline_name": {
+							"value": "@toLower(pipeline().Pipeline)",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "tr_re_malha_setor_censitario_copy1",
+				"description": "Roda o script que leva os dados da raw para trusted. Depois disso leva os dados processados para a pasta na raw chamada \"processados\"",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "rw_tr_malha_setor_censitario",
 						"dependencyConditions": [
 							"Succeeded"
 						]
